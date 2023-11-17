@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Character extends Model
 {
     use HasFactory;
+    
+    public function techniques()
+    {
+        return $this->hasMany(Technique::class);
+    }
+    
+    public function posts()
+    {
+        return $this->hasmany(Post::class);
+    }
 }

@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Technique extends Model
 {
     use HasFactory;
+    
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
+    }
+    
+    public function posts()
+    {
+        return $this->hasmany(Post::class);
+    }
 }
