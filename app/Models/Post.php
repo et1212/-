@@ -27,9 +27,14 @@ class Post extends Model
         return $this->belongsTo(Technique::class);
     }
     
-    public function character()
+    public function character()//通常のリレーションとmy_character_idのための記述
     {
-        return $this->belongsTo(Character::class);
+        return $this->belongsTo(Character::class, 'my_character_id');
+    }
+    
+    public function character_vs_character()//vs_character_id用の記述
+    {
+        return $this->belongsTo(Character::class, 'vs_character_id');
     }
     
     public function fights()
@@ -39,11 +44,11 @@ class Post extends Model
     
     public function stages()
     {
-        return $this->belongsToMany(Stage::class);
+        return $this->belongsToMany(Stage::class, 'fights');//fightsテーブルをpostsテーブルおよびstagesテーブルの中間テーブルとして位置づける
     }
     
     public function getPaginateByLimit(int $limit_count=10)
     {
-        return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        return $this::with('user', 'technique', 'character', 'character_vs_character', 'fights', 'fights.stage')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
 }

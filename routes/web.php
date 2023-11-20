@@ -19,6 +19,7 @@ Route::get('/', [PostController::class, 'index'])->name('Home');
 Route::get('/posts/create', [PostController::class, 'create'])->name('create');
 //上記はRoute::get('/posts/{post}', 'PostController@show');の上に書くようにしてください。
 Route::post('/posts', [Postcontroller::class, 'store']);
+Route::get('/posts/{post}', [PostController::class ,'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
