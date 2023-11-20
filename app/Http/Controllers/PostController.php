@@ -12,9 +12,19 @@ use App\Models\Stage;
 
 class PostController extends Controller
 {
+    public function __construct()//未ログイン状態のユーザーをページに遷移させたくない場合にonly([])の中にメソッドを記述する。
+    {
+        $this->middleware('auth')->only(['create', 'store']);
+    }
+    
     public function index(Post $post)
     {
         return view('posts.home')->with(['posts' => $post->getPaginateByLimit()]);
+    }
+    
+    public function show(Post $post)
+    {
+        return view('posts.show')->with(['post' => $post]);
     }
     
     public function create(Character $character, Technique $technique, Stage $stage)
@@ -35,6 +45,6 @@ class PostController extends Controller
             $input_fight += ['post_id' => $post->id];
             $fight->fill($input_fight)->save();//fightsテーブルへの保存
         }
-        return redirect('/posts/' . $post->id);
+        return redirect('/');
     }
 }
