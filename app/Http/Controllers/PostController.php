@@ -30,7 +30,6 @@ class PostController extends Controller
     public function create(Character $character, Technique $technique, Stage $stage)
     {
         return view('posts.create')->with(['characters' => $character->get(), 'techniques' => $technique->get(), 'stages' => $stage->get()]);
-        //（保留中）$techniqueはvs_character（相手キャラ）と一致したものを取得する必要がある。
         //fightsテーブルはpostsテーブルとstagesテーブルの中間テーブルとしても機能している。
     }
     

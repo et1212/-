@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CharacterController;
+use App\Models\Post;
+use App\Models\Character;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +20,15 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', [PostController::class, 'index'])->name('Home');
 Route::get('/posts/create', [PostController::class, 'create'])->name('create');
-//上記はRoute::get('/posts/{post}', 'PostController@show');の上に書くようにしてください。
 Route::post('/posts', [Postcontroller::class, 'store']);
 Route::get('/posts/{post}', [PostController::class ,'show']);
+
+Route::get('/characters/search', [CharacterController::class, 'search'])->name('search');
+Route::get('/characters/search_my', [CharacterController::class, 'search_my'])->name('search_my');
+Route::get('/characters/search_vs', [CharacterController::class, 'search_vs'])->name('search_vs');
+Route::get('/characters/search_myvs', [CharacterController::class, 'search_myvs'])->name('search_myvs');
+Route::get('/characters/my/{character}', [CharacterController::class, 'index_my']);
+Route::get('/characters/vs/{character}', [CharacterController::class, 'index_vs']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

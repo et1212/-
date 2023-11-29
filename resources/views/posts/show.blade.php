@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <x-app-layout>
     <x-slot name="header">
-        Home
+        投稿{{ $post->id }}
     </x-slot>
     <body>
         <div class='post'>
