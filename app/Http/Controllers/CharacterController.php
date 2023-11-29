@@ -30,9 +30,7 @@ class CharacterController extends Controller
     {
         $search_my = $request['search_my'];
         
-        $posts = Post::whereHas('character', function ($query) use ($search_my) {
-            $query->where('id', $search_my);
-        })->orderBy('updated_at', 'DESC')->paginate(15);
+        $posts = Post::where('my_character_id', $search_my)->orderBy('updated_at', 'DESC')->paginate(15);
         
         return view('characters.index', 
         [
@@ -44,9 +42,7 @@ class CharacterController extends Controller
     {
         $search_vs = $request['search_vs'];
         
-        $posts = Post::whereHas('character_vs_character', function ($query) use ($search_vs) {
-            $query->where('id', $search_vs);
-        })->orderBy('updated_at', 'DESC')->paginate(15);
+        $posts = Post::where('vs_character_id', $search_vs)->orderBy('updated_at', 'DESC')->paginate(15);
         
         return view('characters.index', 
         [
@@ -54,24 +50,16 @@ class CharacterController extends Controller
         ])->with(['characters' => $character->get()]);
     }
     
-    // public function search_myvs(Request $request, Character $character)
-    // {
-    //     $search_my = $request['search_my'];
-    //     $search_vs = $request['search_vs'];
+    public function search_myvs(Request $request, Character $character)
+    {
+        $search_my = $request['search_my'];
+        $search_vs = $request['search_vs'];
         
-    //     $posts_my = Post::whereHas('character', function ($query) use ($search_my) {
-    //         $query->where('id', $search_my);
-    //     });
-            
-    //     $posts_vs = Post::whereHas('character_vs_character', function ($query) use ($search_vs) {
-    //         $query->where('id', $search_vs);
-    //     });
+        $posts = Post::where(['my_character_id'=>$search_my, 'vs_character_id'=>$search_vs])->orderBy('updated_at', 'DESC')->paginate(15);
         
-    //     $posts = Post::
-        
-    //     return view('characters.index', 
-    //     [
-    //         'posts' => $posts
-    //     ])->with(['characters' => $character->get()]);
-    // }
+        return view('characters.index', 
+        [
+            'posts' => $posts
+        ])->with(['characters' => $character->get()]);
+    }
 }
